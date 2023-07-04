@@ -5,16 +5,26 @@ import summarizer
 
 
 def main():
+    print("Starting...")
+
     # Scrape
-    data = scraper.scrape("https://www.bbc.com/news/world-us-canada-56756556", "p")
+    data, err = scraper.scrape("https://www.bbc.com/news/world-us-canada-56756556", "p")
+    if err != None:
+        print(err)
+        sys.exit(1)
 
     # Summarize
-    summaries = summarizer.summarize(sys.argv[1], data)
+    summaries, err = summarizer.summarize_many(sys.argv[1], data)
+    if err != None:
+        print(err)
+        sys.exit(1)
 
     # Write to file
     with open("output.txt", "w") as f:
         for summary in summaries:
             f.write(summary)
+
+    print("Finished.")
 
 
 if __name__ == "__main__":
