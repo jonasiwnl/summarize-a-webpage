@@ -1,8 +1,8 @@
 import sys
 
-from web_scrapa.scraper import scrape
-from web_scrapa.summarizer import summarize_many
-from web_scrapa.env import validate_env
+from scraper import scrape
+from summarizer import summarize_many
+from env import validate_env
 
 
 def main():
@@ -16,11 +16,15 @@ def main():
         print(err)
         sys.exit(1)
 
+    summaries = [s for s in data]
+
+    """
     # Summarize
     summaries, err = summarize_many(data, env["HUGGINGFACE_API_KEY"])
     if err != None:
         print(err)
         sys.exit(1)
+    """
 
     # Write to file
     with open("output.txt", "w") as f:
@@ -33,7 +37,6 @@ def main():
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python3 main.py <URL>")
-        print("Make sure to export your OpenAI API key to OPENAI_API_KEY")
         sys.exit(1)
 
     main()

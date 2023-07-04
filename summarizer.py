@@ -1,11 +1,10 @@
 import requests
-import json
 from typing import Union
 
 from errors import WebScrapaError, ErrorCategory
 
 
-def summarize(key: str, data: list[str]) -> Union[list[str], WebScrapaError]:
+def summarize_many(key: str, data: list[str]) -> Union[list[str], WebScrapaError]:
     """
     Summarize the given text using openai
 
