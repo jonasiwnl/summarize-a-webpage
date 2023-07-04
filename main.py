@@ -1,20 +1,23 @@
 import sys
 
-import scraper
-import summarizer
+from web_scrapa.scraper import scrape
+from web_scrapa.summarizer import summarize_many
+from web_scrapa.env import validate_env
 
 
 def main():
     print("Starting...")
 
+    env = validate_env()
+
     # Scrape
-    data, err = scraper.scrape("https://www.bbc.com/news/world-us-canada-56756556", "p")
+    data, err = scrape(sys.argv[1], "p")
     if err != None:
         print(err)
         sys.exit(1)
 
     # Summarize
-    summaries, err = summarizer.summarize_many(sys.argv[1], data)
+    summaries, err = summarize_many(data, env["HUGGINGFACE_API_KEY"])
     if err != None:
         print(err)
         sys.exit(1)
@@ -29,7 +32,8 @@ def main():
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python3 main.py <OPEN_AI_KEY>")
+        print("Usage: python3 main.py <URL>")
+        print("Make sure to export your OpenAI API key to OPENAI_API_KEY")
         sys.exit(1)
 
     main()

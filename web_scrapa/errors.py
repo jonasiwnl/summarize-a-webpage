@@ -4,8 +4,9 @@ from enum import Enum
 class ErrorCategory(Enum):
     REQUESTERROR = "request to url"
     SCRAPINGERROR = "website scrape"
-    OPENAIERROR = "openai api fetch"
+    HUGGINGFACEERROR = "huggingface api fetch"
     WRITINGERROR = "write to file"
+    ENVERROR = "environment reading"
     MISCERROR = "something, lol"
 
 

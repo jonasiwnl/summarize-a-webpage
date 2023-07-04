@@ -29,4 +29,4 @@ def scrape(url: str, target: str) -> Tuple[list[str], WebScrapaError]:
         return None, WebScrapaError(ErrorCategory.MISCERROR, exception)
 
     # Find and return all the target data
-    return soup.find_all(target), None
+    return [el.get_text() for el in soup.find_all(target)], None
