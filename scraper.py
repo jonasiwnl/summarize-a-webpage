@@ -14,7 +14,7 @@ def scrape(url: str, target: str) -> Tuple[list[str], WebScrapaError]:
     """
     try:
         page = urlopen(url)
-        soup = BeautifulSoup(page.read().decode("utf-8"), "html.parser")
+        soup = BeautifulSoup(page.read(), "html.parser")
 
     except URLError as uexception:
         return None, WebScrapaError(ErrorCategory.REQUESTERROR, uexception)

@@ -17,4 +17,4 @@ class WebScrapaError:
 
 
     def __str__(self):
-        return f"Error while attempting {self.category}! {self.message}"
+        return f"Error while attempting {self.category.value}! {self.message}"

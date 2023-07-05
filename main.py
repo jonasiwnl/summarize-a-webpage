@@ -8,7 +8,10 @@ from env import validate_env
 def main():
     print("Starting...")
 
-    env = validate_env()
+    env, err = validate_env()
+    if err != None:
+        print(err)
+        sys.exit(1)
 
     # Scrape
     data, err = scrape(sys.argv[1], "p")
@@ -16,20 +19,16 @@ def main():
         print(err)
         sys.exit(1)
 
-    summaries = [s for s in data]
-
-    """
     # Summarize
-    summaries, err = summarize_many(data, env["HUGGINGFACE_API_KEY"])
+    summaries, err = summarize_many(data, env.get("HUGGINGFACE_API_KEY"))
     if err != None:
         print(err)
         sys.exit(1)
-    """
 
     # Write to file
     with open("output.txt", "w") as f:
         for summary in summaries:
-            f.write(summary)
+            f.write(f"{summary}\n")
 
     print("Finished.")
 

@@ -1,10 +1,11 @@
 import requests
+import json
 from typing import Union
 
 from errors import WebScrapaError, ErrorCategory
 
 
-def summarize_many(key: str, data: list[str]) -> Union[list[str], WebScrapaError]:
+def summarize_many(data: list[str], key: str) -> Union[list[str], WebScrapaError]:
     """
     Summarize the given text using openai
 
@@ -19,21 +20,21 @@ def summarize_many(key: str, data: list[str]) -> Union[list[str], WebScrapaError
         "Authorization": f"Bearer {key}"
     }
 
-    for text in data:
-        payload = {
-            "inputs": text,
-            "parameters": {
-                "max_length": 150,
-                "min_length": 40
-            }
-        }
+    try:
+        for text in data:
+            payload = json.dumps({
+                "inputs": text,
+                "parameters": {
+                    "max_length": 50,
+                    "min_length": 5,
+                }
+            })
 
-        try:
             response = requests.post(api_url, headers=headers, json=payload)
             resp.append(response.json()[0]["summary_text"])
 
-        # TODO better error handling
-        except Exception as exception:
-            return None, WebScrapaError(ErrorCategory.HUGGINGFACEERROR, exception)
+    # TODO better error handling
+    except Exception as exception:
+        return None, WebScrapaError(ErrorCategory.HUGGINGFACEERROR, exception)
 
     return resp, None
