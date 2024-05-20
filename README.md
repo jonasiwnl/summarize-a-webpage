@@ -1,4 +1,1 @@
-# web - scrapa
-
-## Descripción
-scrape news? use openai to summarize? idk
+Paste a link and get it summarized :)
